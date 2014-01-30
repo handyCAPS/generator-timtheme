@@ -24,23 +24,25 @@ module.exports = function(grunt) {
 				"undef": true,
 				"globals": {
 					"jQuery": true,
-					"alert": true
+					"alert": true,
+					"ajaxurl": true
 				}
 			},
 			all: [
 				'gruntfile.js',
-				'../js/script.js'
+				'../js/**/*.js'
 			]
 		},
 
 		// concat and minify our JS
 		uglify: {
 			dist: {
-				files: {
-					'../js/scripts.min.js': [
-						'../js/scripts.js'
-					]
-				}
+				files: [{
+					expand: true,
+					cwd: '../lib/js',
+					src: '**/*.js',
+					dest: 'dist/js'
+				}]
 			}
 		},
 

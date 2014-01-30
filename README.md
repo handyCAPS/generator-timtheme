@@ -1,12 +1,11 @@
-![alt tag](https://raw.github.com/danielauener/generator-wp-grunted-theme/master/header.png)
+<!-- ![alt tag](https://raw.github.com/danielauener/generator-wp-grunted-theme/master/header.png) -->
 
-# generator-wp-grunted-theme
+# generator-timtheme
 
 A WordPress theme [Yeoman](http://yeoman.io) generator, to kickstart WordPress
 theme development with yo, sass and grunt.
 
-**Note:** For now, this generator is an early development version, so expect many
-changes and some bugs in both the generator and generated theme.
+This fork is set up for my personal preferences.
 
 ## What do you get
 - A fully funtional WordPress theme with a working *grunt* development environment.
