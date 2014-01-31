@@ -30,7 +30,7 @@ module.exports = function(grunt) {
 			},
 			all: [
 				'gruntfile.js',
-				'../js/**/*.js'
+				'../lib/js/**/*.js'
 			]
 		},
 
@@ -52,29 +52,29 @@ module.exports = function(grunt) {
 				options: {
 					style: 'expanded'
 				},
-				src: ['../scss/style.scss'],
-				dest: '../style.css'
+				src: ['../lib/scss/**/*.scss'],
+				dest: '../lib/style.css'
 			},
 			prod: {
 				options: {
 					style: 'compressed'
 				},
-				src: ['../scss/style.scss'],
-				dest: '../style.css'
+				src: ['../lib/scss/style.scss'],
+				dest: '../lib/style.css'
 			},
 			editorstyles: {
 				options: {
 					style: 'expanded'
 				},
-				src: ['../scss/wp-editor-style.scss'],
-				dest: '../css/wp-editor-style.css'
+				src: ['../lib/scss/wp-editor-style.scss'],
+				dest: '../lib/css/wp-editor-style.css'
 			}
 		},
 
 		// watch for changes
 		watch: {
 			scss: {
-				files: ['../scss/**/*.scss'],
+				files: ['../lib/scss/**/*.scss'],
 				tasks: [
 					'sass:dev',
 					'sass:editorstyles',
@@ -96,7 +96,7 @@ module.exports = function(grunt) {
 		// check your php
 		phpcs: {
 			application: {
-				dir: '../*.php'
+				dir: '../lib/**/*.php'
 			},
 			options: {
 				bin: '/usr/bin/phpcs'
@@ -127,7 +127,7 @@ module.exports = function(grunt) {
 
 		clean: {
 			dist: {
-				src: ['../dist'],
+				src: ['../lib/dist'],
 				options: {
 					force: true
 				}
@@ -137,14 +137,14 @@ module.exports = function(grunt) {
 		copyto: {
 			dist: {
 				files: [
-					{cwd: '../', src: ['**/*'], dest: '../dist/'}
+					{cwd: '../lib/', src: ['**/*'], dest: '../lib/dist/'}
 				],
 				options: {
 					ignore: [
-						'../dist{,/**/*}',
-						'../doc{,/**/*}',
-						'../grunt{,/**/*}',
-						'../scss{,/**/*}'
+						'../lib/dist{,/**/*}',
+						'../lib/doc{,/**/*}',
+						'../lib/grunt{,/**/*}',
+						'../lib/scss{,/**/*}'
 					]
 				}
 			}

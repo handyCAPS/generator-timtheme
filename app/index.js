@@ -9,8 +9,8 @@ var TimThemeGenerator = module.exports = function TimThemeGenerator(args, option
 
   this.on('end', function () {
   	if (this.themeNameSpace) {
-	  	process.chdir("/grunt/");
-	    this.installDependencies({ skipInstall: options['skip-install'], bower: false });
+	  	process.chdir("grunt/");
+	    this.installDependencies({ skipInstall: options['skip-install'], bower: this.bower });
   	}
   });
 
@@ -25,6 +25,11 @@ TimThemeGenerator.prototype.askFor = function askFor() {
   console.log("\n\n                           "+chalk.blue.bold("**")+"         \n"+"           "+chalk.blue.bold("****")+"    "+chalk.blue.bold("****")+"    "+chalk.blue.bold("****")+"       \n"+"  "+chalk.yellow("GGGGG")+"  "+chalk.yellow("RRRR")+""+chalk.blue.bold("*")+"  "+chalk.yellow("U")+"   "+chalk.blue.bold("*")+""+chalk.yellow("U")+"  "+chalk.yellow("N")+"   "+chalk.blue.bold("*")+""+chalk.yellow("N")+"  "+chalk.yellow("TTTTTT")+"\n"+""+chalk.yellow("GG")+"       "+chalk.yellow("R")+"   "+chalk.yellow("R")+""+chalk.blue.bold("*")+" "+chalk.yellow("U")+"   "+chalk.blue.bold("*")+""+chalk.yellow("U")+""+chalk.blue.bold("*")+" "+chalk.yellow("N")+" "+chalk.yellow("N")+" "+chalk.blue.bold("*")+""+chalk.yellow("N")+"    "+chalk.yellow("TT")+"  \n"+""+chalk.yellow("GG")+"  "+chalk.yellow("GGG")+"  "+chalk.yellow("RRR")+"  "+chalk.blue.bold("**")+""+chalk.yellow("U")+"  "+chalk.blue.bold("*")+" "+chalk.yellow("U")+""+chalk.blue.bold("**")+""+chalk.yellow("N")+"  "+chalk.yellow("N")+" "+chalk.yellow("N")+"    "+chalk.yellow("TT")+"  \n"+"  "+chalk.yellow("GGGGG")+"  "+chalk.yellow("R")+"   "+chalk.yellow("R")+" "+chalk.blue.bold("**")+" "+chalk.yellow("UU")+"   "+chalk.blue.bold("*")+""+chalk.yellow("N")+" "+chalk.blue.bold("*")+"  "+chalk.yellow("N")+"    "+chalk.yellow("TT")+"  \n"+"                "+chalk.blue.bold("**")+"      "+chalk.blue.bold("**")+"            \n\n "+chalk.yellow.bold("*")+""+chalk.blue.bold("START YOUR GRUNTED WORDPRESS THEME")+""+chalk.yellow.bold("*")+" \n\n");
 
   var prompts = [{
+    type: 'confirm',
+    name: 'needBower',
+    message: 'Wanna use bower ?',
+    default: 'Y'
+  },{
     name: 'themeName',
     message: 'Name of the theme you want to create?'
   },{
@@ -55,7 +60,7 @@ TimThemeGenerator.prototype.askFor = function askFor() {
   	type: 'checkbox',
     name: 'themeTags',
     message: 'Theme tags ( more available on wordpress.org )?',
-    choices: ['dark','light','left-sidebar','right-sidebar','fixed-layout','fluid-layout','responsive-layout']
+    choices: ['dark','light','left-sidebar','right-sidebar','responsive-layout']
   },{
     name: 'themeDescription',
     message: 'Description of the theme?',
@@ -73,6 +78,7 @@ TimThemeGenerator.prototype.askFor = function askFor() {
     this.themeTags = props.themeTags;
     this.themeDescription = props.themeDescription;
     this.jshintTag = '<%= jshint.all %>';
+    this.bower = props.needBower;
 
     cb();
   }.bind(this));
@@ -86,6 +92,10 @@ TimThemeGenerator.prototype.app = function app() {
   this.directory('lib', '/lib');
   this.mkdir('grunt');
   this.write('lib/js/'+this.themeNameSpace+'.js', 'Put your JS here');
+
+  if (this.bower) {
+    this.template('_bower.json', 'grunt/bower.json');
+  }
 
   this.template('_gruntfile.js', 'grunt/gruntfile.js');
   this.template('_package.json', 'grunt/package.json');
